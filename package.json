@@ -1,0 +1,22 @@
+{
+  "name": "filter_task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sajedakhdair/Filter_Task.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sajedakhdair/Filter_Task/issues"
+  },
+  "homepage": "https://github.com/sajedakhdair/Filter_Task#readme",
+  "devDependencies": {
+    "jest": "^25.1.0"
+  }
+}
