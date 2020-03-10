@@ -18,5 +18,8 @@
   "homepage": "https://github.com/sajedakhdair/Filter_Task#readme",
   "devDependencies": {
     "jest": "^25.1.0"
+  },
+  "dependencies": {
+    "@types/node": "^13.9.0"
   }
 }
