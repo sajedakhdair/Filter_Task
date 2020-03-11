@@ -919,3 +919,6 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
   }
   return rowsToFilter;
 };
+module.exports = {
+  filterRows
+};
