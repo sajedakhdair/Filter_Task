@@ -398,7 +398,7 @@ describe("filter Rows according to a column value  ", () => {
   });
   //finished testing for all blocks that  enter case 2 in filter.ts code
   //////////////////////////////////////////////////////////////////////////////////////
-  ///////////start testing for all blocks that  enter case 2 in filter.ts code
+  ///////////start testing for all blocks that  enter case 3 in filter.ts code
   test("testcase 26:compare columnValue by 'Starts with' filter1Value And 'Is equal to' filter2Value", () => {
     let filterValues = {
       filter1By: "Starts with",
@@ -578,6 +578,22 @@ describe("filter Rows according to a column value  ", () => {
       { id: "2", name: "Ahmad khdair", category: "male" },
       { id: "4", name: "SAJED Abd", category: "Male" }
     ];
+    expect(result).toStrictEqual(expected);
+  });
+  //finished testing for all blocks that  enter case 3 in filter.ts code
+  ////////////////////////////////////////////////////////////////////
+  // start testing for all blocks that  enter case 4 in filter.ts code
+  test("testcase 38:compare columnValue by 'Contains' filter1Value And 'Is equal to' filter2Value", () => {
+    let filterValues = {
+      filter1By: "Contains",
+      filter1Value: "khdair",
+      filter2By: "Is equal to",
+      filter2Value: "Sajeda Khdair",
+      compareValue: "And",
+      column: "name"
+    };
+    const result = filterRows(mycolumn, filterValues);
+    const expected = [{ id: "1", name: "sajeda KHDAIR", category: "female" }];
     expect(result).toStrictEqual(expected);
   });
 });
