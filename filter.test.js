@@ -366,4 +366,17 @@ describe("filter Rows according to a column value  ", () => {
     ];
     expect(result).toStrictEqual(expected);
   });
+  test("testcase 24:compare columnValue by 'Is not equal to' filter1Value And 'Ends with' filter2Value", () => {
+    let filterValues = {
+      filter1By: "Is not equal to",
+      filter1Value: "sajeda KHDAIR",
+      filter2By: "Ends with",
+      filter2Value: "Khdair",
+      compareValue: "And",
+      column: "name"
+    };
+    const result = filterRows(mycolumn, filterValues);
+    const expected = [{ id: "2", name: "Ahmad khdair", category: "male" }];
+    expect(result).toStrictEqual(expected);
+  });
 });
