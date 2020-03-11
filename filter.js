@@ -886,3 +886,6 @@ var filterRows = function (rows, filterValues) {
     }
     return rowsToFilter;
 };
+module.exports = {
+    filterRows: filterRows
+};
