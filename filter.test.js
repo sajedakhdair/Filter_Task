@@ -851,4 +851,17 @@ describe("filter Rows according to a column value  ", () => {
     ];
     expect(result).toStrictEqual(expected);
   });
+  test("testcase 56:compare columnValue by 'Does not contain' filter1Value And 'Contains' filter2Value", () => {
+    let filterValues = {
+      filter1By: "Does not contain",
+      filter1Value: "5",
+      filter2By: "Contains",
+      filter2Value: "1",
+      compareValue: "And",
+      column: "id"
+    };
+    const result = filterRows(mycolumn, filterValues);
+    const expected = [{ id: "1", name: "sajeda KHDAIR", category: "female" }];
+    expect(result).toStrictEqual(expected);
+  });
 });
