@@ -29,14 +29,12 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
   const filter1By = filterValues.filter1By;
   const filter2By = filterValues.filter2By;
   const filter1Value_LowerCase = filterValues.filter1Value.toLowerCase();
-  const filter2Value = filterValues.filter2Value;
   const filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
   const compareValue = filterValues.compareValue;
 
-  if (!filterValues.filter1Value) {
+  if (!filter1Value_LowerCase) {
     return rowsToFilter;
   }
-
   switch (filter1By) {
     case "Is equal to":
       if (filter2By === "Is equal to") {
@@ -44,7 +42,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() === filter1Value_LowerCase &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() ===
                 filter2Value_LowerCase
                 : true)
@@ -53,7 +51,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() === filter1Value_LowerCase ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() ===
                 filter2Value_LowerCase
                 : false)
@@ -64,7 +62,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() === filter1Value_LowerCase &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() !==
                 filter2Value_LowerCase
                 : true)
@@ -73,7 +71,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() === filter1Value_LowerCase ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() !==
                 filter2Value_LowerCase
                 : false)
@@ -84,7 +82,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() === filter1Value_LowerCase &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .startsWith(filter2Value_LowerCase)
@@ -94,7 +92,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() === filter1Value_LowerCase ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .startsWith(filter2Value_LowerCase)
@@ -106,7 +104,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() === filter1Value_LowerCase &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -116,7 +114,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() === filter1Value_LowerCase ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -128,7 +126,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() === filter1Value_LowerCase &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? !row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -138,7 +136,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() === filter1Value_LowerCase ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? !row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -150,7 +148,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() === filter1Value_LowerCase &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .endsWith(filter2Value_LowerCase)
@@ -160,7 +158,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() === filter1Value_LowerCase ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .endsWith(filter2Value_LowerCase)
@@ -175,7 +173,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() !== filter1Value_LowerCase &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() ===
                 filter2Value_LowerCase
                 : true)
@@ -184,7 +182,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() !== filter1Value_LowerCase ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() ===
                 filter2Value_LowerCase
                 : false)
@@ -195,7 +193,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() !== filter1Value_LowerCase &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() !==
                 filter2Value_LowerCase
                 : true)
@@ -204,7 +202,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() !== filter1Value_LowerCase ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() !==
                 filter2Value_LowerCase
                 : false)
@@ -215,7 +213,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() !== filter1Value_LowerCase &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .startsWith(filter2Value_LowerCase)
@@ -225,7 +223,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() !== filter1Value_LowerCase ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .startsWith(filter2Value_LowerCase)
@@ -237,7 +235,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() !== filter1Value_LowerCase &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -247,7 +245,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() !== filter1Value_LowerCase ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -259,7 +257,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() !== filter1Value_LowerCase &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? !row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -269,7 +267,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() !== filter1Value_LowerCase ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? !row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -281,7 +279,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() !== filter1Value_LowerCase &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .endsWith(filter2Value_LowerCase)
@@ -291,7 +289,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column].toLowerCase() !== filter1Value_LowerCase ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .endsWith(filter2Value_LowerCase)
@@ -308,7 +306,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .startsWith(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() ===
                 filter2Value_LowerCase
                 : true)
@@ -319,7 +317,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .startsWith(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() ===
                 filter2Value_LowerCase
                 : false)
@@ -332,7 +330,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .startsWith(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() !==
                 filter2Value_LowerCase
                 : true)
@@ -343,7 +341,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .startsWith(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() !==
                 filter2Value_LowerCase
                 : false)
@@ -356,7 +354,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .startsWith(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .startsWith(filter2Value_LowerCase)
@@ -368,7 +366,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .startsWith(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .startsWith(filter2Value_LowerCase)
@@ -382,7 +380,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .startsWith(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -394,7 +392,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .startsWith(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -408,7 +406,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .startsWith(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? !row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -420,7 +418,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .startsWith(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? !row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -434,7 +432,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .startsWith(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .endsWith(filter2Value_LowerCase)
@@ -446,7 +444,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .startsWith(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .endsWith(filter2Value_LowerCase)
@@ -463,7 +461,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() ===
                 filter2Value_LowerCase
                 : true)
@@ -474,7 +472,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() ===
                 filter2Value_LowerCase
                 : false)
@@ -487,7 +485,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() !==
                 filter2Value_LowerCase
                 : true)
@@ -498,7 +496,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() !==
                 filter2Value_LowerCase
                 : false)
@@ -511,7 +509,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .startsWith(filter2Value_LowerCase)
@@ -523,7 +521,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .startsWith(filter2Value_LowerCase)
@@ -537,7 +535,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -549,7 +547,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -563,7 +561,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? !row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -575,7 +573,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? !row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -589,7 +587,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .endsWith(filter2Value_LowerCase)
@@ -601,7 +599,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .endsWith(filter2Value_LowerCase)
@@ -618,7 +616,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               !row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() ===
                 filter2Value_LowerCase
                 : true)
@@ -629,7 +627,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               !row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() ===
                 filter2Value_LowerCase
                 : false)
@@ -642,7 +640,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               !row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() !==
                 filter2Value_LowerCase
                 : true)
@@ -653,7 +651,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               !row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() !==
                 filter2Value_LowerCase
                 : false)
@@ -666,7 +664,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               !row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .startsWith(filter2Value_LowerCase)
@@ -678,7 +676,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               !row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .startsWith(filter2Value_LowerCase)
@@ -692,7 +690,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               !row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -704,7 +702,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               !row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -718,7 +716,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               !row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? !row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -730,7 +728,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               !row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? !row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -744,7 +742,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               !row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .endsWith(filter2Value_LowerCase)
@@ -756,7 +754,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               !row[column]
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .endsWith(filter2Value_LowerCase)
@@ -773,7 +771,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .endsWith(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() ===
                 filter2Value_LowerCase
                 : true)
@@ -784,7 +782,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .endsWith(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() ===
                 filter2Value_LowerCase
                 : false)
@@ -797,7 +795,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .endsWith(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() !==
                 filter2Value_LowerCase
                 : true)
@@ -808,7 +806,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .endsWith(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column].toLowerCase() !==
                 filter2Value_LowerCase
                 : false)
@@ -821,7 +819,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .endsWith(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .startsWith(filter2Value_LowerCase)
@@ -833,7 +831,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .endsWith(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .startsWith(filter2Value_LowerCase)
@@ -847,7 +845,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .endsWith(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -859,7 +857,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .endsWith(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -873,7 +871,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .endsWith(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? !row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -885,7 +883,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .endsWith(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? !row[column]
                   .toLowerCase()
                   .includes(filter2Value_LowerCase)
@@ -899,7 +897,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .endsWith(filter1Value_LowerCase) &&
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .endsWith(filter2Value_LowerCase)
@@ -911,7 +909,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
               row[column]
                 .toLowerCase()
                 .endsWith(filter1Value_LowerCase) ||
-              (filter2Value
+              (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
                   .endsWith(filter2Value_LowerCase)
