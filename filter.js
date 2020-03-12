@@ -1,3 +1,4 @@
+var myStartsWith = function (firstString, secondString) { return firstString.startsWith(secondString); };
 var filterRows = function (rows, filterValues) {
     var rowsToFilter = rows;
     var column = filterValues.column;
@@ -56,9 +57,7 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column].toLowerCase() === filter1Value_LowerCase &&
                             (filter2Value_LowerCase
-                                ? row[column]
-                                    .toLowerCase()
-                                    .startsWith(filter2Value_LowerCase)
+                                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -66,9 +65,7 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column].toLowerCase() === filter1Value_LowerCase ||
                             (filter2Value_LowerCase
-                                ? row[column]
-                                    .toLowerCase()
-                                    .startsWith(filter2Value_LowerCase)
+                                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                                 : false);
                     });
                 }
@@ -186,9 +183,7 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column].toLowerCase() !== filter1Value_LowerCase &&
                             (filter2Value_LowerCase
-                                ? row[column]
-                                    .toLowerCase()
-                                    .startsWith(filter2Value_LowerCase)
+                                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -196,9 +191,7 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column].toLowerCase() !== filter1Value_LowerCase ||
                             (filter2Value_LowerCase
-                                ? row[column]
-                                    .toLowerCase()
-                                    .startsWith(filter2Value_LowerCase)
+                                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                                 : false);
                     });
                 }
@@ -273,154 +266,102 @@ var filterRows = function (rows, filterValues) {
         case "Starts with":
             if (filter2By === "Is equal to") {
                 if (compareValue === "And") {
-                    rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column]
-                            .toLowerCase()
-                            .startsWith(filter1Value_LowerCase) &&
-                            (filter2Value_LowerCase
-                                ? row[column].toLowerCase() ===
-                                    filter2Value_LowerCase
-                                : true);
-                    });
+                    rowsToFilter = rowsToFilter.filter(function (row) { return myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) &&
+                        (filter2Value_LowerCase
+                            ? row[column].toLowerCase() ===
+                                filter2Value_LowerCase
+                            : true); });
                 }
                 else {
-                    rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column]
-                            .toLowerCase()
-                            .startsWith(filter1Value_LowerCase) ||
-                            (filter2Value_LowerCase
-                                ? row[column].toLowerCase() ===
-                                    filter2Value_LowerCase
-                                : false);
-                    });
+                    rowsToFilter = rowsToFilter.filter(function (row) { return myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) ||
+                        (filter2Value_LowerCase
+                            ? row[column].toLowerCase() ===
+                                filter2Value_LowerCase
+                            : false); });
                 }
             }
             else if (filter2By === "Is not equal to") {
                 if (compareValue === "And") {
-                    rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column]
-                            .toLowerCase()
-                            .startsWith(filter1Value_LowerCase) &&
-                            (filter2Value_LowerCase
-                                ? row[column].toLowerCase() !==
-                                    filter2Value_LowerCase
-                                : true);
-                    });
+                    rowsToFilter = rowsToFilter.filter(function (row) { return myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) &&
+                        (filter2Value_LowerCase
+                            ? row[column].toLowerCase() !==
+                                filter2Value_LowerCase
+                            : true); });
                 }
                 else {
-                    rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column]
-                            .toLowerCase()
-                            .startsWith(filter1Value_LowerCase) ||
-                            (filter2Value_LowerCase
-                                ? row[column].toLowerCase() !==
-                                    filter2Value_LowerCase
-                                : false);
-                    });
+                    rowsToFilter = rowsToFilter.filter(function (row) { return myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) ||
+                        (filter2Value_LowerCase
+                            ? row[column].toLowerCase() !==
+                                filter2Value_LowerCase
+                            : false); });
                 }
             }
             else if (filter2By === "Starts with") {
                 if (compareValue === "And") {
-                    rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column]
-                            .toLowerCase()
-                            .startsWith(filter1Value_LowerCase) &&
-                            (filter2Value_LowerCase
-                                ? row[column]
-                                    .toLowerCase()
-                                    .startsWith(filter2Value_LowerCase)
-                                : true);
-                    });
+                    rowsToFilter = rowsToFilter.filter(function (row) { return myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) &&
+                        (filter2Value_LowerCase
+                            ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
+                            : true); });
                 }
                 else {
-                    rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column]
-                            .toLowerCase()
-                            .startsWith(filter1Value_LowerCase) ||
-                            (filter2Value_LowerCase
-                                ? row[column]
-                                    .toLowerCase()
-                                    .startsWith(filter2Value_LowerCase)
-                                : false);
-                    });
+                    rowsToFilter = rowsToFilter.filter(function (row) { return myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) ||
+                        (filter2Value_LowerCase
+                            ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
+                            : false); });
                 }
             }
             else if (filter2By === "Contains") {
                 if (compareValue === "And") {
-                    rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column]
-                            .toLowerCase()
-                            .startsWith(filter1Value_LowerCase) &&
-                            (filter2Value_LowerCase
-                                ? row[column]
-                                    .toLowerCase()
-                                    .includes(filter2Value_LowerCase)
-                                : true);
-                    });
+                    rowsToFilter = rowsToFilter.filter(function (row) { return myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) &&
+                        (filter2Value_LowerCase
+                            ? row[column]
+                                .toLowerCase()
+                                .includes(filter2Value_LowerCase)
+                            : true); });
                 }
                 else {
-                    rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column]
-                            .toLowerCase()
-                            .startsWith(filter1Value_LowerCase) ||
-                            (filter2Value_LowerCase
-                                ? row[column]
-                                    .toLowerCase()
-                                    .includes(filter2Value_LowerCase)
-                                : false);
-                    });
+                    rowsToFilter = rowsToFilter.filter(function (row) { return myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) ||
+                        (filter2Value_LowerCase
+                            ? row[column]
+                                .toLowerCase()
+                                .includes(filter2Value_LowerCase)
+                            : false); });
                 }
             }
             else if (filter2By === "Does not contain") {
                 if (compareValue === "And") {
-                    rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column]
-                            .toLowerCase()
-                            .startsWith(filter1Value_LowerCase) &&
-                            (filter2Value_LowerCase
-                                ? !row[column]
-                                    .toLowerCase()
-                                    .includes(filter2Value_LowerCase)
-                                : true);
-                    });
+                    rowsToFilter = rowsToFilter.filter(function (row) { return myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) &&
+                        (filter2Value_LowerCase
+                            ? !row[column]
+                                .toLowerCase()
+                                .includes(filter2Value_LowerCase)
+                            : true); });
                 }
                 else {
-                    rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column]
-                            .toLowerCase()
-                            .startsWith(filter1Value_LowerCase) ||
-                            (filter2Value_LowerCase
-                                ? !row[column]
-                                    .toLowerCase()
-                                    .includes(filter2Value_LowerCase)
-                                : false);
-                    });
+                    rowsToFilter = rowsToFilter.filter(function (row) { return myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) ||
+                        (filter2Value_LowerCase
+                            ? !row[column]
+                                .toLowerCase()
+                                .includes(filter2Value_LowerCase)
+                            : false); });
                 }
             }
             else if (filter2By === "Ends with") {
                 if (compareValue === "And") {
-                    rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column]
-                            .toLowerCase()
-                            .startsWith(filter1Value_LowerCase) &&
-                            (filter2Value_LowerCase
-                                ? row[column]
-                                    .toLowerCase()
-                                    .endsWith(filter2Value_LowerCase)
-                                : true);
-                    });
+                    rowsToFilter = rowsToFilter.filter(function (row) { return myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) &&
+                        (filter2Value_LowerCase
+                            ? row[column]
+                                .toLowerCase()
+                                .endsWith(filter2Value_LowerCase)
+                            : true); });
                 }
                 else {
-                    rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column]
-                            .toLowerCase()
-                            .startsWith(filter1Value_LowerCase) ||
-                            (filter2Value_LowerCase
-                                ? row[column]
-                                    .toLowerCase()
-                                    .endsWith(filter2Value_LowerCase)
-                                : false);
-                    });
+                    rowsToFilter = rowsToFilter.filter(function (row) { return myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) ||
+                        (filter2Value_LowerCase
+                            ? row[column]
+                                .toLowerCase()
+                                .endsWith(filter2Value_LowerCase)
+                            : false); });
                 }
             }
             break;
@@ -480,9 +421,7 @@ var filterRows = function (rows, filterValues) {
                             .toLowerCase()
                             .includes(filter1Value_LowerCase) &&
                             (filter2Value_LowerCase
-                                ? row[column]
-                                    .toLowerCase()
-                                    .startsWith(filter2Value_LowerCase)
+                                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -492,9 +431,7 @@ var filterRows = function (rows, filterValues) {
                             .toLowerCase()
                             .includes(filter1Value_LowerCase) ||
                             (filter2Value_LowerCase
-                                ? row[column]
-                                    .toLowerCase()
-                                    .startsWith(filter2Value_LowerCase)
+                                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                                 : false);
                     });
                 }
@@ -634,9 +571,7 @@ var filterRows = function (rows, filterValues) {
                             .toLowerCase()
                             .includes(filter1Value_LowerCase) &&
                             (filter2Value_LowerCase
-                                ? row[column]
-                                    .toLowerCase()
-                                    .startsWith(filter2Value_LowerCase)
+                                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -646,9 +581,7 @@ var filterRows = function (rows, filterValues) {
                             .toLowerCase()
                             .includes(filter1Value_LowerCase) ||
                             (filter2Value_LowerCase
-                                ? row[column]
-                                    .toLowerCase()
-                                    .startsWith(filter2Value_LowerCase)
+                                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                                 : false);
                     });
                 }
@@ -788,9 +721,7 @@ var filterRows = function (rows, filterValues) {
                             .toLowerCase()
                             .endsWith(filter1Value_LowerCase) &&
                             (filter2Value_LowerCase
-                                ? row[column]
-                                    .toLowerCase()
-                                    .startsWith(filter2Value_LowerCase)
+                                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -800,9 +731,7 @@ var filterRows = function (rows, filterValues) {
                             .toLowerCase()
                             .endsWith(filter1Value_LowerCase) ||
                             (filter2Value_LowerCase
-                                ? row[column]
-                                    .toLowerCase()
-                                    .startsWith(filter2Value_LowerCase)
+                                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                                 : false);
                     });
                 }
