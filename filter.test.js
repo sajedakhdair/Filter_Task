@@ -1079,4 +1079,20 @@ describe("filter Rows according to a column value  ", () => {
     ];
     expect(result).toStrictEqual(expected);
   });
+  test("testcase 71:compare Value for name-column by 'Ends with' filter1Value And 'Ends with' filter2Value,specified case (filter2Value='')", () => {
+    let filterValues = {
+      filter1By: "Ends with",
+      filter1Value: "Khdair",
+      filter2By: "Ends with",
+      filter2Value: "",
+      compareValue: "And",
+      column: "name"
+    };
+    const result = filterRows(mycolumn, filterValues);
+    const expected = [
+      { id: "1", name: "sajeda KHDAIR", category: "female" },
+      { id: "2", name: "Ahmad khdair", category: "male" }
+    ];
+    expect(result).toStrictEqual(expected);
+  });
 });
