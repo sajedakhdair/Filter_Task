@@ -1130,4 +1130,18 @@ describe("filter Rows according to a column value  ", () => {
     expect(result).toStrictEqual(expected);
   });
   //finished testing for all blocks that  enter case 6 in filter.ts code
+  test("testcase 74:compare columnValue by 'Ends with' filter1Value Or 'Starts with' filter2Value & specified case rows =[]", () => {
+    let filterValues = {
+      filter1By: "Ends with",
+      filter1Value: "Khdair",
+      filter2By: "Starts with",
+      filter2Value: "S",
+      compareValue: "Or",
+      column: "name"
+    };
+    let myColumn = [];
+    const result = filterRows(myColumn, filterValues);
+    const expected = [];
+    expect(result).toStrictEqual(expected);
+  });
 });
