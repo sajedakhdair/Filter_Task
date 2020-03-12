@@ -1,280 +1,285 @@
 var filterRows = function (rows, filterValues) {
     var rowsToFilter = rows;
     var column = filterValues.column;
-    if (!filterValues.filter1Value) {
+    var filter1By = filterValues.filter1By;
+    var filter2By = filterValues.filter2By;
+    var filter1Value_LowerCase = filterValues.filter1Value.toLowerCase();
+    var filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
+    var compareValue = filterValues.compareValue;
+    if (!filter1Value_LowerCase) {
         return rowsToFilter;
     }
-    switch (filterValues.filter1By) {
+    switch (filter1By) {
         case "Is equal to":
-            if (filterValues.filter2By === "Is equal to") {
-                if (filterValues.compareValue === "And") {
+            if (filter2By === "Is equal to") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() &&
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() === filter1Value_LowerCase &&
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() ===
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : true);
                     });
                 }
                 else {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() ||
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() === filter1Value_LowerCase ||
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() ===
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Is not equal to") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Is not equal to") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() &&
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() === filter1Value_LowerCase &&
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() !==
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : true);
                     });
                 }
                 else {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() ||
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() === filter1Value_LowerCase ||
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() !==
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Starts with") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Starts with") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() &&
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() === filter1Value_LowerCase &&
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .startsWith(filterValues.filter2Value.toLowerCase())
+                                    .startsWith(filter2Value_LowerCase)
                                 : true);
                     });
                 }
                 else {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() ||
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() === filter1Value_LowerCase ||
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .startsWith(filterValues.filter2Value.toLowerCase())
+                                    .startsWith(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Contains") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Contains") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() &&
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() === filter1Value_LowerCase &&
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : true);
                     });
                 }
                 else {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() ||
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() === filter1Value_LowerCase ||
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Does not contain") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Does not contain") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() &&
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() === filter1Value_LowerCase &&
+                            (filter2Value_LowerCase
                                 ? !row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : true);
                     });
                 }
                 else {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() ||
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() === filter1Value_LowerCase ||
+                            (filter2Value_LowerCase
                                 ? !row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Ends with") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Ends with") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() &&
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() === filter1Value_LowerCase &&
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .endsWith(filterValues.filter2Value.toLowerCase())
+                                    .endsWith(filter2Value_LowerCase)
                                 : true);
                     });
                 }
                 else {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() ||
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() === filter1Value_LowerCase ||
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .endsWith(filterValues.filter2Value.toLowerCase())
+                                    .endsWith(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
             break;
         case "Is not equal to":
-            if (filterValues.filter2By === "Is equal to") {
-                if (filterValues.compareValue === "And") {
+            if (filter2By === "Is equal to") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() &&
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() !== filter1Value_LowerCase &&
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() ===
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : true);
                     });
                 }
                 else {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() ||
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() !== filter1Value_LowerCase ||
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() ===
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Is not equal to") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Is not equal to") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() &&
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() !== filter1Value_LowerCase &&
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() !==
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : true);
                     });
                 }
                 else {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() ||
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() !== filter1Value_LowerCase ||
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() !==
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Starts with") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Starts with") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() &&
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() !== filter1Value_LowerCase &&
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .startsWith(filterValues.filter2Value.toLowerCase())
+                                    .startsWith(filter2Value_LowerCase)
                                 : true);
                     });
                 }
                 else {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() ||
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() !== filter1Value_LowerCase ||
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .startsWith(filterValues.filter2Value.toLowerCase())
+                                    .startsWith(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Contains") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Contains") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() &&
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() !== filter1Value_LowerCase &&
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : true);
                     });
                 }
                 else {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() ||
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() !== filter1Value_LowerCase ||
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Does not contain") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Does not contain") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() &&
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() !== filter1Value_LowerCase &&
+                            (filter2Value_LowerCase
                                 ? !row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : true);
                     });
                 }
                 else {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() ||
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() !== filter1Value_LowerCase ||
+                            (filter2Value_LowerCase
                                 ? !row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Ends with") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Ends with") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() &&
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() !== filter1Value_LowerCase &&
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .endsWith(filterValues.filter2Value.toLowerCase())
+                                    .endsWith(filter2Value_LowerCase)
                                 : true);
                     });
                 }
                 else {
                     rowsToFilter = rowsToFilter.filter(function (row) {
-                        return row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() ||
-                            (filterValues.filter2Value
+                        return row[column].toLowerCase() !== filter1Value_LowerCase ||
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .endsWith(filterValues.filter2Value.toLowerCase())
+                                    .endsWith(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
             break;
         case "Starts with":
-            if (filterValues.filter2By === "Is equal to") {
-                if (filterValues.compareValue === "And") {
+            if (filter2By === "Is equal to") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .startsWith(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .startsWith(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() ===
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : true);
                     });
                 }
@@ -282,23 +287,23 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .startsWith(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .startsWith(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() ===
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Is not equal to") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Is not equal to") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .startsWith(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .startsWith(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() !==
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : true);
                     });
                 }
@@ -306,24 +311,24 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .startsWith(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .startsWith(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() !==
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Starts with") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Starts with") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .startsWith(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .startsWith(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .startsWith(filterValues.filter2Value.toLowerCase())
+                                    .startsWith(filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -331,25 +336,25 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .startsWith(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .startsWith(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .startsWith(filterValues.filter2Value.toLowerCase())
+                                    .startsWith(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Contains") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Contains") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .startsWith(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .startsWith(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -357,25 +362,25 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .startsWith(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .startsWith(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Does not contain") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Does not contain") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .startsWith(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .startsWith(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? !row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -383,25 +388,25 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .startsWith(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .startsWith(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? !row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Ends with") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Ends with") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .startsWith(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .startsWith(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .endsWith(filterValues.filter2Value.toLowerCase())
+                                    .endsWith(filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -409,26 +414,26 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .startsWith(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .startsWith(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .endsWith(filterValues.filter2Value.toLowerCase())
+                                    .endsWith(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
             break;
         case "Contains":
-            if (filterValues.filter2By === "Is equal to") {
-                if (filterValues.compareValue === "And") {
+            if (filter2By === "Is equal to") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() ===
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : true);
                     });
                 }
@@ -436,23 +441,23 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() ===
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Is not equal to") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Is not equal to") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() !==
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : true);
                     });
                 }
@@ -460,24 +465,24 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() !==
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Starts with") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Starts with") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .startsWith(filterValues.filter2Value.toLowerCase())
+                                    .startsWith(filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -485,25 +490,25 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .startsWith(filterValues.filter2Value.toLowerCase())
+                                    .startsWith(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Contains") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Contains") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -511,25 +516,25 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Does not contain") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Does not contain") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? !row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -537,25 +542,25 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? !row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Ends with") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Ends with") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .endsWith(filterValues.filter2Value.toLowerCase())
+                                    .endsWith(filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -563,26 +568,26 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .endsWith(filterValues.filter2Value.toLowerCase())
+                                    .endsWith(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
             break;
         case "Does not contain":
-            if (filterValues.filter2By === "Is equal to") {
-                if (filterValues.compareValue === "And") {
+            if (filter2By === "Is equal to") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return !row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() ===
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : true);
                     });
                 }
@@ -590,23 +595,23 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return !row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() ===
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Is not equal to") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Is not equal to") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return !row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() !==
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : true);
                     });
                 }
@@ -614,24 +619,24 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return !row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() !==
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Starts with") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Starts with") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return !row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .startsWith(filterValues.filter2Value.toLowerCase())
+                                    .startsWith(filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -639,25 +644,25 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return !row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .startsWith(filterValues.filter2Value.toLowerCase())
+                                    .startsWith(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Contains") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Contains") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return !row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -665,25 +670,25 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return !row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Does not contain") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Does not contain") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return !row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? !row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -691,25 +696,25 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return !row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? !row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Ends with") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Ends with") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return !row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .endsWith(filterValues.filter2Value.toLowerCase())
+                                    .endsWith(filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -717,26 +722,26 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return !row[column]
                             .toLowerCase()
-                            .includes(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .includes(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .endsWith(filterValues.filter2Value.toLowerCase())
+                                    .endsWith(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
             break;
         case "Ends with":
-            if (filterValues.filter2By === "Is equal to") {
-                if (filterValues.compareValue === "And") {
+            if (filter2By === "Is equal to") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .endsWith(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .endsWith(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() ===
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : true);
                     });
                 }
@@ -744,23 +749,23 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .endsWith(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .endsWith(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() ===
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Is not equal to") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Is not equal to") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .endsWith(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .endsWith(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() !==
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : true);
                     });
                 }
@@ -768,24 +773,24 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .endsWith(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .endsWith(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column].toLowerCase() !==
-                                    filterValues.filter2Value.toLowerCase()
+                                    filter2Value_LowerCase
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Starts with") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Starts with") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .endsWith(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .endsWith(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .startsWith(filterValues.filter2Value.toLowerCase())
+                                    .startsWith(filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -793,25 +798,25 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .endsWith(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .endsWith(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .startsWith(filterValues.filter2Value.toLowerCase())
+                                    .startsWith(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Contains") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Contains") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .endsWith(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .endsWith(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -819,25 +824,25 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .endsWith(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .endsWith(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Does not contain") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Does not contain") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .endsWith(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .endsWith(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? !row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -845,25 +850,25 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .endsWith(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .endsWith(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? !row[column]
                                     .toLowerCase()
-                                    .includes(filterValues.filter2Value.toLowerCase())
+                                    .includes(filter2Value_LowerCase)
                                 : false);
                     });
                 }
             }
-            else if (filterValues.filter2By === "Ends with") {
-                if (filterValues.compareValue === "And") {
+            else if (filter2By === "Ends with") {
+                if (compareValue === "And") {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .endsWith(filterValues.filter1Value.toLowerCase()) &&
-                            (filterValues.filter2Value
+                            .endsWith(filter1Value_LowerCase) &&
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .endsWith(filterValues.filter2Value.toLowerCase())
+                                    .endsWith(filter2Value_LowerCase)
                                 : true);
                     });
                 }
@@ -871,11 +876,11 @@ var filterRows = function (rows, filterValues) {
                     rowsToFilter = rowsToFilter.filter(function (row) {
                         return row[column]
                             .toLowerCase()
-                            .endsWith(filterValues.filter1Value.toLowerCase()) ||
-                            (filterValues.filter2Value
+                            .endsWith(filter1Value_LowerCase) ||
+                            (filter2Value_LowerCase
                                 ? row[column]
                                     .toLowerCase()
-                                    .endsWith(filterValues.filter2Value.toLowerCase())
+                                    .endsWith(filter2Value_LowerCase)
                                 : false);
                     });
                 }
