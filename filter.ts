@@ -26,285 +26,291 @@ interface Column {
 const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] => {
   let rowsToFilter = rows;
   const column: keyof Column = filterValues.column;
+  const filter1By = filterValues.filter1By;
+  const filter2By = filterValues.filter2By;
+  const filter1Value_LowerCase = filterValues.filter1Value.toLowerCase();
+  const filter2Value = filterValues.filter2Value;
+  const filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
+  const compareValue = filterValues.compareValue;
 
   if (!filterValues.filter1Value) {
     return rowsToFilter;
   }
 
-  switch (filterValues.filter1By) {
+  switch (filter1By) {
     case "Is equal to":
-      if (filterValues.filter2By === "Is equal to") {
-        if (filterValues.compareValue === "And") {
+      if (filter2By === "Is equal to") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() &&
-              (filterValues.filter2Value
+              row[column].toLowerCase() === filter1Value_LowerCase &&
+              (filter2Value
                 ? row[column].toLowerCase() ===
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : true)
           );
         } else {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() ||
-              (filterValues.filter2Value
+              row[column].toLowerCase() === filter1Value_LowerCase ||
+              (filter2Value
                 ? row[column].toLowerCase() ===
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Is not equal to") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Is not equal to") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() &&
-              (filterValues.filter2Value
+              row[column].toLowerCase() === filter1Value_LowerCase &&
+              (filter2Value
                 ? row[column].toLowerCase() !==
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : true)
           );
         } else {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() ||
-              (filterValues.filter2Value
+              row[column].toLowerCase() === filter1Value_LowerCase ||
+              (filter2Value
                 ? row[column].toLowerCase() !==
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Starts with") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Starts with") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() &&
-              (filterValues.filter2Value
+              row[column].toLowerCase() === filter1Value_LowerCase &&
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .startsWith(filterValues.filter2Value.toLowerCase())
+                  .startsWith(filter2Value_LowerCase)
                 : true)
           );
         } else {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() ||
-              (filterValues.filter2Value
+              row[column].toLowerCase() === filter1Value_LowerCase ||
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .startsWith(filterValues.filter2Value.toLowerCase())
+                  .startsWith(filter2Value_LowerCase)
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Contains") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Contains") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() &&
-              (filterValues.filter2Value
+              row[column].toLowerCase() === filter1Value_LowerCase &&
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : true)
           );
         } else {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() ||
-              (filterValues.filter2Value
+              row[column].toLowerCase() === filter1Value_LowerCase ||
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Does not contain") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Does not contain") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() &&
-              (filterValues.filter2Value
+              row[column].toLowerCase() === filter1Value_LowerCase &&
+              (filter2Value
                 ? !row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : true)
           );
         } else {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() ||
-              (filterValues.filter2Value
+              row[column].toLowerCase() === filter1Value_LowerCase ||
+              (filter2Value
                 ? !row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Ends with") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Ends with") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() &&
-              (filterValues.filter2Value
+              row[column].toLowerCase() === filter1Value_LowerCase &&
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .endsWith(filterValues.filter2Value.toLowerCase())
+                  .endsWith(filter2Value_LowerCase)
                 : true)
           );
         } else {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() === filterValues.filter1Value.toLowerCase() ||
-              (filterValues.filter2Value
+              row[column].toLowerCase() === filter1Value_LowerCase ||
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .endsWith(filterValues.filter2Value.toLowerCase())
+                  .endsWith(filter2Value_LowerCase)
                 : false)
           );
         }
       }
       break;
     case "Is not equal to":
-      if (filterValues.filter2By === "Is equal to") {
-        if (filterValues.compareValue === "And") {
+      if (filter2By === "Is equal to") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() &&
-              (filterValues.filter2Value
+              row[column].toLowerCase() !== filter1Value_LowerCase &&
+              (filter2Value
                 ? row[column].toLowerCase() ===
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : true)
           );
         } else {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() ||
-              (filterValues.filter2Value
+              row[column].toLowerCase() !== filter1Value_LowerCase ||
+              (filter2Value
                 ? row[column].toLowerCase() ===
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Is not equal to") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Is not equal to") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() &&
-              (filterValues.filter2Value
+              row[column].toLowerCase() !== filter1Value_LowerCase &&
+              (filter2Value
                 ? row[column].toLowerCase() !==
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : true)
           );
         } else {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() ||
-              (filterValues.filter2Value
+              row[column].toLowerCase() !== filter1Value_LowerCase ||
+              (filter2Value
                 ? row[column].toLowerCase() !==
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Starts with") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Starts with") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() &&
-              (filterValues.filter2Value
+              row[column].toLowerCase() !== filter1Value_LowerCase &&
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .startsWith(filterValues.filter2Value.toLowerCase())
+                  .startsWith(filter2Value_LowerCase)
                 : true)
           );
         } else {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() ||
-              (filterValues.filter2Value
+              row[column].toLowerCase() !== filter1Value_LowerCase ||
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .startsWith(filterValues.filter2Value.toLowerCase())
+                  .startsWith(filter2Value_LowerCase)
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Contains") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Contains") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() &&
-              (filterValues.filter2Value
+              row[column].toLowerCase() !== filter1Value_LowerCase &&
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : true)
           );
         } else {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() ||
-              (filterValues.filter2Value
+              row[column].toLowerCase() !== filter1Value_LowerCase ||
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Does not contain") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Does not contain") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() &&
-              (filterValues.filter2Value
+              row[column].toLowerCase() !== filter1Value_LowerCase &&
+              (filter2Value
                 ? !row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : true)
           );
         } else {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() ||
-              (filterValues.filter2Value
+              row[column].toLowerCase() !== filter1Value_LowerCase ||
+              (filter2Value
                 ? !row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Ends with") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Ends with") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() &&
-              (filterValues.filter2Value
+              row[column].toLowerCase() !== filter1Value_LowerCase &&
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .endsWith(filterValues.filter2Value.toLowerCase())
+                  .endsWith(filter2Value_LowerCase)
                 : true)
           );
         } else {
           rowsToFilter = rowsToFilter.filter(
             row =>
-              row[column].toLowerCase() !== filterValues.filter1Value.toLowerCase() ||
-              (filterValues.filter2Value
+              row[column].toLowerCase() !== filter1Value_LowerCase ||
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .endsWith(filterValues.filter2Value.toLowerCase())
+                  .endsWith(filter2Value_LowerCase)
                 : false)
           );
         }
       }
       break;
     case "Starts with":
-      if (filterValues.filter2By === "Is equal to") {
-        if (filterValues.compareValue === "And") {
+      if (filter2By === "Is equal to") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column]
                 .toLowerCase()
-                .startsWith(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .startsWith(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column].toLowerCase() ===
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : true)
           );
         } else {
@@ -312,23 +318,23 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column]
                 .toLowerCase()
-                .startsWith(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .startsWith(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column].toLowerCase() ===
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Is not equal to") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Is not equal to") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column]
                 .toLowerCase()
-                .startsWith(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .startsWith(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column].toLowerCase() !==
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : true)
           );
         } else {
@@ -336,24 +342,24 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column]
                 .toLowerCase()
-                .startsWith(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .startsWith(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column].toLowerCase() !==
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Starts with") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Starts with") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column]
                 .toLowerCase()
-                .startsWith(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .startsWith(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .startsWith(filterValues.filter2Value.toLowerCase())
+                  .startsWith(filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -361,25 +367,25 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column]
                 .toLowerCase()
-                .startsWith(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .startsWith(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .startsWith(filterValues.filter2Value.toLowerCase())
+                  .startsWith(filter2Value_LowerCase)
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Contains") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Contains") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column]
                 .toLowerCase()
-                .startsWith(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .startsWith(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -387,25 +393,25 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column]
                 .toLowerCase()
-                .startsWith(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .startsWith(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Does not contain") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Does not contain") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column]
                 .toLowerCase()
-                .startsWith(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .startsWith(filter1Value_LowerCase) &&
+              (filter2Value
                 ? !row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -413,25 +419,25 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column]
                 .toLowerCase()
-                .startsWith(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .startsWith(filter1Value_LowerCase) ||
+              (filter2Value
                 ? !row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Ends with") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Ends with") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column]
                 .toLowerCase()
-                .startsWith(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .startsWith(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .endsWith(filterValues.filter2Value.toLowerCase())
+                  .endsWith(filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -439,27 +445,27 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column]
                 .toLowerCase()
-                .startsWith(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .startsWith(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .endsWith(filterValues.filter2Value.toLowerCase())
+                  .endsWith(filter2Value_LowerCase)
                 : false)
           );
         }
       }
       break;
     case "Contains":
-      if (filterValues.filter2By === "Is equal to") {
-        if (filterValues.compareValue === "And") {
+      if (filter2By === "Is equal to") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column].toLowerCase() ===
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : true)
           );
         } else {
@@ -467,23 +473,23 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column].toLowerCase() ===
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Is not equal to") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Is not equal to") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column].toLowerCase() !==
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : true)
           );
         } else {
@@ -491,24 +497,24 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column].toLowerCase() !==
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Starts with") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Starts with") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .startsWith(filterValues.filter2Value.toLowerCase())
+                  .startsWith(filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -516,25 +522,25 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .startsWith(filterValues.filter2Value.toLowerCase())
+                  .startsWith(filter2Value_LowerCase)
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Contains") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Contains") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -542,25 +548,25 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Does not contain") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Does not contain") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) &&
+              (filter2Value
                 ? !row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -568,25 +574,25 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) ||
+              (filter2Value
                 ? !row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Ends with") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Ends with") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .endsWith(filterValues.filter2Value.toLowerCase())
+                  .endsWith(filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -594,27 +600,27 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .endsWith(filterValues.filter2Value.toLowerCase())
+                  .endsWith(filter2Value_LowerCase)
                 : false)
           );
         }
       }
       break;
     case "Does not contain":
-      if (filterValues.filter2By === "Is equal to") {
-        if (filterValues.compareValue === "And") {
+      if (filter2By === "Is equal to") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               !row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column].toLowerCase() ===
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : true)
           );
         } else {
@@ -622,23 +628,23 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               !row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column].toLowerCase() ===
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Is not equal to") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Is not equal to") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               !row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column].toLowerCase() !==
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : true)
           );
         } else {
@@ -646,24 +652,24 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               !row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column].toLowerCase() !==
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Starts with") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Starts with") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               !row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .startsWith(filterValues.filter2Value.toLowerCase())
+                  .startsWith(filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -671,25 +677,25 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               !row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .startsWith(filterValues.filter2Value.toLowerCase())
+                  .startsWith(filter2Value_LowerCase)
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Contains") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Contains") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               !row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -697,25 +703,25 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               !row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Does not contain") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Does not contain") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               !row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) &&
+              (filter2Value
                 ? !row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -723,25 +729,25 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               !row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) ||
+              (filter2Value
                 ? !row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Ends with") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Ends with") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               !row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .endsWith(filterValues.filter2Value.toLowerCase())
+                  .endsWith(filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -749,27 +755,27 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               !row[column]
                 .toLowerCase()
-                .includes(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .includes(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .endsWith(filterValues.filter2Value.toLowerCase())
+                  .endsWith(filter2Value_LowerCase)
                 : false)
           );
         }
       }
       break;
     case "Ends with":
-      if (filterValues.filter2By === "Is equal to") {
-        if (filterValues.compareValue === "And") {
+      if (filter2By === "Is equal to") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column]
                 .toLowerCase()
-                .endsWith(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .endsWith(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column].toLowerCase() ===
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : true)
           );
         } else {
@@ -777,23 +783,23 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column]
                 .toLowerCase()
-                .endsWith(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .endsWith(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column].toLowerCase() ===
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Is not equal to") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Is not equal to") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column]
                 .toLowerCase()
-                .endsWith(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .endsWith(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column].toLowerCase() !==
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : true)
           );
         } else {
@@ -801,24 +807,24 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column]
                 .toLowerCase()
-                .endsWith(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .endsWith(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column].toLowerCase() !==
-                filterValues.filter2Value.toLowerCase()
+                filter2Value_LowerCase
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Starts with") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Starts with") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column]
                 .toLowerCase()
-                .endsWith(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .endsWith(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .startsWith(filterValues.filter2Value.toLowerCase())
+                  .startsWith(filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -826,25 +832,25 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column]
                 .toLowerCase()
-                .endsWith(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .endsWith(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .startsWith(filterValues.filter2Value.toLowerCase())
+                  .startsWith(filter2Value_LowerCase)
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Contains") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Contains") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column]
                 .toLowerCase()
-                .endsWith(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .endsWith(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -852,25 +858,25 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column]
                 .toLowerCase()
-                .endsWith(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .endsWith(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Does not contain") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Does not contain") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column]
                 .toLowerCase()
-                .endsWith(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .endsWith(filter1Value_LowerCase) &&
+              (filter2Value
                 ? !row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -878,25 +884,25 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column]
                 .toLowerCase()
-                .endsWith(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .endsWith(filter1Value_LowerCase) ||
+              (filter2Value
                 ? !row[column]
                   .toLowerCase()
-                  .includes(filterValues.filter2Value.toLowerCase())
+                  .includes(filter2Value_LowerCase)
                 : false)
           );
         }
-      } else if (filterValues.filter2By === "Ends with") {
-        if (filterValues.compareValue === "And") {
+      } else if (filter2By === "Ends with") {
+        if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
             row =>
               row[column]
                 .toLowerCase()
-                .endsWith(filterValues.filter1Value.toLowerCase()) &&
-              (filterValues.filter2Value
+                .endsWith(filter1Value_LowerCase) &&
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .endsWith(filterValues.filter2Value.toLowerCase())
+                  .endsWith(filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -904,11 +910,11 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column]
                 .toLowerCase()
-                .endsWith(filterValues.filter1Value.toLowerCase()) ||
-              (filterValues.filter2Value
+                .endsWith(filter1Value_LowerCase) ||
+              (filter2Value
                 ? row[column]
                   .toLowerCase()
-                  .endsWith(filterValues.filter2Value.toLowerCase())
+                  .endsWith(filter2Value_LowerCase)
                 : false)
           );
         }
