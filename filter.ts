@@ -23,6 +23,7 @@ interface Column {
   name: string;
 }
 
+const myStartsWith = (firstString: string, secondString: string): boolean => { return firstString.startsWith(secondString) }
 const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] => {
   let rowsToFilter = rows;
   const column: keyof Column = filterValues.column;
@@ -83,9 +84,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column].toLowerCase() === filter1Value_LowerCase &&
               (filter2Value_LowerCase
-                ? row[column]
-                  .toLowerCase()
-                  .startsWith(filter2Value_LowerCase)
+                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -93,9 +92,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column].toLowerCase() === filter1Value_LowerCase ||
               (filter2Value_LowerCase
-                ? row[column]
-                  .toLowerCase()
-                  .startsWith(filter2Value_LowerCase)
+                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                 : false)
           );
         }
@@ -214,9 +211,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column].toLowerCase() !== filter1Value_LowerCase &&
               (filter2Value_LowerCase
-                ? row[column]
-                  .toLowerCase()
-                  .startsWith(filter2Value_LowerCase)
+                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -224,9 +219,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
             row =>
               row[column].toLowerCase() !== filter1Value_LowerCase ||
               (filter2Value_LowerCase
-                ? row[column]
-                  .toLowerCase()
-                  .startsWith(filter2Value_LowerCase)
+                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                 : false)
           );
         }
@@ -302,10 +295,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
       if (filter2By === "Is equal to") {
         if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
-            row =>
-              row[column]
-                .toLowerCase()
-                .startsWith(filter1Value_LowerCase) &&
+            row => myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) &&
               (filter2Value_LowerCase
                 ? row[column].toLowerCase() ===
                 filter2Value_LowerCase
@@ -313,10 +303,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           );
         } else {
           rowsToFilter = rowsToFilter.filter(
-            row =>
-              row[column]
-                .toLowerCase()
-                .startsWith(filter1Value_LowerCase) ||
+            row => myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) ||
               (filter2Value_LowerCase
                 ? row[column].toLowerCase() ===
                 filter2Value_LowerCase
@@ -326,10 +313,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
       } else if (filter2By === "Is not equal to") {
         if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
-            row =>
-              row[column]
-                .toLowerCase()
-                .startsWith(filter1Value_LowerCase) &&
+            row => myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) &&
               (filter2Value_LowerCase
                 ? row[column].toLowerCase() !==
                 filter2Value_LowerCase
@@ -337,10 +321,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           );
         } else {
           rowsToFilter = rowsToFilter.filter(
-            row =>
-              row[column]
-                .toLowerCase()
-                .startsWith(filter1Value_LowerCase) ||
+            row => myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) ||
               (filter2Value_LowerCase
                 ? row[column].toLowerCase() !==
                 filter2Value_LowerCase
@@ -350,36 +331,23 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
       } else if (filter2By === "Starts with") {
         if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
-            row =>
-              row[column]
-                .toLowerCase()
-                .startsWith(filter1Value_LowerCase) &&
+            row => myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) &&
               (filter2Value_LowerCase
-                ? row[column]
-                  .toLowerCase()
-                  .startsWith(filter2Value_LowerCase)
+                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                 : true)
           );
         } else {
           rowsToFilter = rowsToFilter.filter(
-            row =>
-              row[column]
-                .toLowerCase()
-                .startsWith(filter1Value_LowerCase) ||
+            row => myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) ||
               (filter2Value_LowerCase
-                ? row[column]
-                  .toLowerCase()
-                  .startsWith(filter2Value_LowerCase)
+                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                 : false)
           );
         }
       } else if (filter2By === "Contains") {
         if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
-            row =>
-              row[column]
-                .toLowerCase()
-                .startsWith(filter1Value_LowerCase) &&
+            row => myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) &&
               (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
@@ -388,10 +356,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           );
         } else {
           rowsToFilter = rowsToFilter.filter(
-            row =>
-              row[column]
-                .toLowerCase()
-                .startsWith(filter1Value_LowerCase) ||
+            row => myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) ||
               (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
@@ -402,10 +367,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
       } else if (filter2By === "Does not contain") {
         if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
-            row =>
-              row[column]
-                .toLowerCase()
-                .startsWith(filter1Value_LowerCase) &&
+            row => myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) &&
               (filter2Value_LowerCase
                 ? !row[column]
                   .toLowerCase()
@@ -414,10 +376,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           );
         } else {
           rowsToFilter = rowsToFilter.filter(
-            row =>
-              row[column]
-                .toLowerCase()
-                .startsWith(filter1Value_LowerCase) ||
+            row => myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) ||
               (filter2Value_LowerCase
                 ? !row[column]
                   .toLowerCase()
@@ -428,10 +387,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
       } else if (filter2By === "Ends with") {
         if (compareValue === "And") {
           rowsToFilter = rowsToFilter.filter(
-            row =>
-              row[column]
-                .toLowerCase()
-                .startsWith(filter1Value_LowerCase) &&
+            row => myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) &&
               (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
@@ -440,10 +396,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
           );
         } else {
           rowsToFilter = rowsToFilter.filter(
-            row =>
-              row[column]
-                .toLowerCase()
-                .startsWith(filter1Value_LowerCase) ||
+            row => myStartsWith(row[column].toLowerCase(), filter1Value_LowerCase) ||
               (filter2Value_LowerCase
                 ? row[column]
                   .toLowerCase()
@@ -510,9 +463,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) &&
               (filter2Value_LowerCase
-                ? row[column]
-                  .toLowerCase()
-                  .startsWith(filter2Value_LowerCase)
+                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -522,9 +473,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) ||
               (filter2Value_LowerCase
-                ? row[column]
-                  .toLowerCase()
-                  .startsWith(filter2Value_LowerCase)
+                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                 : false)
           );
         }
@@ -665,9 +614,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) &&
               (filter2Value_LowerCase
-                ? row[column]
-                  .toLowerCase()
-                  .startsWith(filter2Value_LowerCase)
+                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -677,9 +624,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
                 .toLowerCase()
                 .includes(filter1Value_LowerCase) ||
               (filter2Value_LowerCase
-                ? row[column]
-                  .toLowerCase()
-                  .startsWith(filter2Value_LowerCase)
+                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                 : false)
           );
         }
@@ -820,9 +765,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
                 .toLowerCase()
                 .endsWith(filter1Value_LowerCase) &&
               (filter2Value_LowerCase
-                ? row[column]
-                  .toLowerCase()
-                  .startsWith(filter2Value_LowerCase)
+                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                 : true)
           );
         } else {
@@ -832,9 +775,7 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
                 .toLowerCase()
                 .endsWith(filter1Value_LowerCase) ||
               (filter2Value_LowerCase
-                ? row[column]
-                  .toLowerCase()
-                  .startsWith(filter2Value_LowerCase)
+                ? myStartsWith(row[column].toLowerCase(), filter2Value_LowerCase)
                 : false)
           );
         }
