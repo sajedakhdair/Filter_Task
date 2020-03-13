@@ -48,19 +48,27 @@ const myfilter = (rowsToFilter, filterBy, filterValue, column) => {
   }
   return rowsToFilter;
 }
-const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] => {
-  let rowsToFilter = rows;
+
+const firstFilter = (rowsToFilter: Column[], filterValues: FilterFormValues) => {
   const column: keyof Column = filterValues.column;
   const filter1By = filterValues.filter1By;
-  const filter2By = filterValues.filter2By;
   const filter1Value_LowerCase = filterValues.filter1Value.toLowerCase();
+  return myfilter(rowsToFilter, filter1By, filter1Value_LowerCase, column);
+}
+
+const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] => {
+  let rowsToFilter = rows;
+  const filter1Value = filterValues.filter1Value;
+  const column: keyof Column = filterValues.column;
+  const filter2By = filterValues.filter2By;
   const filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
   const compareValue = filterValues.compareValue;
 
-  if (!filter1Value_LowerCase) {
+  if (!filter1Value) {
     return rowsToFilter;
   }
-  let firstFilterResult = myfilter(rowsToFilter, filter1By, filter1Value_LowerCase, column);
+  let firstFilterResult = firstFilter(rowsToFilter, filterValues);
+  
   if (!filter2Value_LowerCase)
     return firstFilterResult;
   if (compareValue === "And") {
