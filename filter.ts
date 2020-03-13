@@ -65,17 +65,30 @@ const filterWithAnd = (firstFilterResult: Column[], filterValues: FilterFormValu
   return myfilter(firstFilterResult, filter2By, filter2Value_LowerCase, column);
 }
 
+const mergeTwoArray = (firstArray, secondArray) => {
+  return [...firstArray, ...secondArray];
+}
+
+const SortArrayById = (myArray) => {
+  return myArray.sort((FirstItem, SecondItem) => {
+    return Number(FirstItem.id) - Number(SecondItem.id);
+  });
+}
+
+const removeDuplicateElements = (myArray) => {
+  let finalResult = myArray.filter((elem, index, self) => self.findIndex(
+    (item) => { return (item.id === elem.id) }) === index)
+  return finalResult;
+}
+
 const filterWithOr = (rowsToFilter: Column[], firstFilterResult: Column[], filterValues: FilterFormValues) => {
   const column: keyof Column = filterValues.column;
   const filter2By = filterValues.filter2By;
   const filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
   let secondFilterResult = myfilter(rowsToFilter, filter2By, filter2Value_LowerCase, column);
-  let finalResult1 = [...firstFilterResult, ...secondFilterResult];
-  finalResult1.sort((a, b) => {
-    return Number(a.id) - Number(b.id);
-  });
-  let finalResult = finalResult1.filter((elem, index, self) => self.findIndex(
-    (t) => { return (t.id === elem.id) }) === index)
+  let finalResult1 = mergeTwoArray(firstFilterResult, secondFilterResult);
+  let sortedArray = SortArrayById(finalResult1);
+  let finalResult = removeDuplicateElements(sortedArray);
   return finalResult;
 }
 
