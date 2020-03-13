@@ -46,17 +46,18 @@ var firstFilter = function (rowsToFilter, filterValues) {
     var filter1Value_LowerCase = filterValues.filter1Value.toLowerCase();
     return myfilter(rowsToFilter, filter1By, filter1Value_LowerCase, column);
 };
-var secondFilter = function (rowsToFilter, firstFilterResult, filterValues) {
+var filterWithAnd = function (firstFilterResult, filterValues) {
     var column = filterValues.column;
     var filter2By = filterValues.filter2By;
     var filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
-    var compareValue = filterValues.compareValue;
-    if (!filter2Value_LowerCase)
-        return firstFilterResult;
-    if (compareValue === "And") {
-        var secondFilterResult_1 = myfilter(firstFilterResult, filter2By, filter2Value_LowerCase, column);
-        return secondFilterResult_1;
-    }
+    if (firstFilterResult === [])
+        return [];
+    return myfilter(firstFilterResult, filter2By, filter2Value_LowerCase, column);
+};
+var filterWithOr = function (rowsToFilter, firstFilterResult, filterValues) {
+    var column = filterValues.column;
+    var filter2By = filterValues.filter2By;
+    var filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
     var secondFilterResult = myfilter(rowsToFilter, filter2By, filter2Value_LowerCase, column);
     var finalResult1 = __spreadArrays(firstFilterResult, secondFilterResult);
     finalResult1.sort(function (a, b) {
@@ -64,6 +65,16 @@ var secondFilter = function (rowsToFilter, firstFilterResult, filterValues) {
     });
     var finalResult = finalResult1.filter(function (elem, index, self) { return self.findIndex(function (t) { return (t.id === elem.id); }) === index; });
     return finalResult;
+};
+var secondFilter = function (rowsToFilter, firstFilterResult, filterValues) {
+    var filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
+    var compareValue = filterValues.compareValue;
+    if (!filter2Value_LowerCase)
+        return firstFilterResult;
+    if (compareValue === "And") {
+        return filterWithAnd(firstFilterResult, filterValues);
+    }
+    return filterWithOr(rowsToFilter, firstFilterResult, filterValues);
 };
 var filterRows = function (rows, filterValues) {
     var rowsToFilter = rows;
