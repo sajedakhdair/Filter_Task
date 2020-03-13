@@ -56,17 +56,19 @@ const firstFilter = (rowsToFilter: Column[], filterValues: FilterFormValues) => 
   return myfilter(rowsToFilter, filter1By, filter1Value_LowerCase, column);
 }
 
-const secondFilter = (rowsToFilter: Column[], firstFilterResult: Column[], filterValues: FilterFormValues) => {
+const filterWithAnd = (firstFilterResult: Column[], filterValues: FilterFormValues) => {
   const column: keyof Column = filterValues.column;
   const filter2By = filterValues.filter2By;
   const filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
-  const compareValue = filterValues.compareValue;
-  if (!filter2Value_LowerCase)
-    return firstFilterResult;
-  if (compareValue === "And") {
-    let secondFilterResult = myfilter(firstFilterResult, filter2By, filter2Value_LowerCase, column);
-    return secondFilterResult;
-  }
+  if (firstFilterResult === [])
+    return [];
+  return myfilter(firstFilterResult, filter2By, filter2Value_LowerCase, column);
+}
+
+const filterWithOr = (rowsToFilter: Column[], firstFilterResult: Column[], filterValues: FilterFormValues) => {
+  const column: keyof Column = filterValues.column;
+  const filter2By = filterValues.filter2By;
+  const filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
   let secondFilterResult = myfilter(rowsToFilter, filter2By, filter2Value_LowerCase, column);
   let finalResult1 = [...firstFilterResult, ...secondFilterResult];
   finalResult1.sort((a, b) => {
@@ -75,6 +77,17 @@ const secondFilter = (rowsToFilter: Column[], firstFilterResult: Column[], filte
   let finalResult = finalResult1.filter((elem, index, self) => self.findIndex(
     (t) => { return (t.id === elem.id) }) === index)
   return finalResult;
+}
+
+const secondFilter = (rowsToFilter: Column[], firstFilterResult: Column[], filterValues: FilterFormValues) => {
+  const filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
+  const compareValue = filterValues.compareValue;
+  if (!filter2Value_LowerCase)
+    return firstFilterResult;
+  if (compareValue === "And") {
+    return filterWithAnd(firstFilterResult, filterValues);
+  }
+  return filterWithOr(rowsToFilter, firstFilterResult, filterValues);
 }
 
 const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] => {
