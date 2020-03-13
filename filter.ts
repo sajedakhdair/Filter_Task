@@ -56,19 +56,11 @@ const firstFilter = (rowsToFilter: Column[], filterValues: FilterFormValues) => 
   return myfilter(rowsToFilter, filter1By, filter1Value_LowerCase, column);
 }
 
-const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] => {
-  let rowsToFilter = rows;
-  const filter1Value = filterValues.filter1Value;
+const secondFilter = (rowsToFilter: Column[], firstFilterResult: Column[], filterValues: FilterFormValues) => {
   const column: keyof Column = filterValues.column;
   const filter2By = filterValues.filter2By;
   const filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
   const compareValue = filterValues.compareValue;
-
-  if (!filter1Value) {
-    return rowsToFilter;
-  }
-  let firstFilterResult = firstFilter(rowsToFilter, filterValues);
-  
   if (!filter2Value_LowerCase)
     return firstFilterResult;
   if (compareValue === "And") {
@@ -82,6 +74,17 @@ const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] =>
   });
   let finalResult = finalResult1.filter((elem, index, self) => self.findIndex(
     (t) => { return (t.id === elem.id) }) === index)
+  return finalResult;
+}
+
+const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] => {
+  let rowsToFilter = rows;
+  const filter1Value = filterValues.filter1Value;
+  if (!filter1Value) {
+    return rowsToFilter;
+  }
+  let firstFilterResult = firstFilter(rowsToFilter, filterValues);
+  let finalResult = secondFilter(rowsToFilter, firstFilterResult, filterValues);
   return finalResult;
 };
 module.exports = {
