@@ -40,18 +40,23 @@ var myfilter = function (rowsToFilter, filterBy, filterValue, column) {
     }
     return rowsToFilter;
 };
-var filterRows = function (rows, filterValues) {
-    var rowsToFilter = rows;
+var firstFilter = function (rowsToFilter, filterValues) {
     var column = filterValues.column;
     var filter1By = filterValues.filter1By;
-    var filter2By = filterValues.filter2By;
     var filter1Value_LowerCase = filterValues.filter1Value.toLowerCase();
+    return myfilter(rowsToFilter, filter1By, filter1Value_LowerCase, column);
+};
+var filterRows = function (rows, filterValues) {
+    var rowsToFilter = rows;
+    var filter1Value = filterValues.filter1Value;
+    var column = filterValues.column;
+    var filter2By = filterValues.filter2By;
     var filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
     var compareValue = filterValues.compareValue;
-    if (!filter1Value_LowerCase) {
+    if (!filter1Value) {
         return rowsToFilter;
     }
-    var firstFilterResult = myfilter(rowsToFilter, filter1By, filter1Value_LowerCase, column);
+    var firstFilterResult = firstFilter(rowsToFilter, filterValues);
     if (!filter2Value_LowerCase)
         return firstFilterResult;
     if (compareValue === "And") {
