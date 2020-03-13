@@ -46,17 +46,11 @@ var firstFilter = function (rowsToFilter, filterValues) {
     var filter1Value_LowerCase = filterValues.filter1Value.toLowerCase();
     return myfilter(rowsToFilter, filter1By, filter1Value_LowerCase, column);
 };
-var filterRows = function (rows, filterValues) {
-    var rowsToFilter = rows;
-    var filter1Value = filterValues.filter1Value;
+var secondFilter = function (rowsToFilter, firstFilterResult, filterValues) {
     var column = filterValues.column;
     var filter2By = filterValues.filter2By;
     var filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
     var compareValue = filterValues.compareValue;
-    if (!filter1Value) {
-        return rowsToFilter;
-    }
-    var firstFilterResult = firstFilter(rowsToFilter, filterValues);
     if (!filter2Value_LowerCase)
         return firstFilterResult;
     if (compareValue === "And") {
@@ -69,6 +63,16 @@ var filterRows = function (rows, filterValues) {
         return Number(a.id) - Number(b.id);
     });
     var finalResult = finalResult1.filter(function (elem, index, self) { return self.findIndex(function (t) { return (t.id === elem.id); }) === index; });
+    return finalResult;
+};
+var filterRows = function (rows, filterValues) {
+    var rowsToFilter = rows;
+    var filter1Value = filterValues.filter1Value;
+    if (!filter1Value) {
+        return rowsToFilter;
+    }
+    var firstFilterResult = firstFilter(rowsToFilter, filterValues);
+    var finalResult = secondFilter(rowsToFilter, firstFilterResult, filterValues);
     return finalResult;
 };
 module.exports = {
