@@ -54,16 +54,26 @@ var filterWithAnd = function (firstFilterResult, filterValues) {
         return [];
     return myfilter(firstFilterResult, filter2By, filter2Value_LowerCase, column);
 };
+var mergeTwoArray = function (firstArray, secondArray) {
+    return __spreadArrays(firstArray, secondArray);
+};
+var SortArrayById = function (myArray) {
+    return myArray.sort(function (FirstItem, SecondItem) {
+        return Number(FirstItem.id) - Number(SecondItem.id);
+    });
+};
+var removeDuplicateElements = function (myArray) {
+    var finalResult = myArray.filter(function (elem, index, self) { return self.findIndex(function (item) { return (item.id === elem.id); }) === index; });
+    return finalResult;
+};
 var filterWithOr = function (rowsToFilter, firstFilterResult, filterValues) {
     var column = filterValues.column;
     var filter2By = filterValues.filter2By;
     var filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
     var secondFilterResult = myfilter(rowsToFilter, filter2By, filter2Value_LowerCase, column);
-    var finalResult1 = __spreadArrays(firstFilterResult, secondFilterResult);
-    finalResult1.sort(function (a, b) {
-        return Number(a.id) - Number(b.id);
-    });
-    var finalResult = finalResult1.filter(function (elem, index, self) { return self.findIndex(function (t) { return (t.id === elem.id); }) === index; });
+    var finalResult1 = mergeTwoArray(firstFilterResult, secondFilterResult);
+    var sortedArray = SortArrayById(finalResult1);
+    var finalResult = removeDuplicateElements(sortedArray);
     return finalResult;
 };
 var secondFilter = function (rowsToFilter, firstFilterResult, filterValues) {
