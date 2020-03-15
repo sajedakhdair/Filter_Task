@@ -23,34 +23,22 @@ interface Column {
   name: string;
 }
 
-const filterIsEqualTo = (rowsToFilter, filterValue, column) => {
-  return rowsToFilter.filter(row =>
-    row[column].toLowerCase() === filterValue)
-}
+const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] => {
+  let rowsToFilter = rows;
+  const filter1Value = filterValues.filter1Value;
+  if (!filter1Value) {
+    return rowsToFilter;
+  }
+  let firstFilterResult = firstFilter(rowsToFilter, filterValues);
+  let finalResult = secondFilterController(rowsToFilter, firstFilterResult, filterValues);
+  return finalResult;
+};
 
-const filterIsNotEqualTo = (rowsToFilter, filterValue, column) => {
-  return rowsToFilter.filter(row =>
-    row[column].toLowerCase() !== filterValue)
-}
-
-const filterStartsWith = (rowsToFilter, filterValue, column) => {
-  return rowsToFilter.filter(row =>
-    row[column].toLowerCase().startsWith(filterValue))
-}
-
-const filterContains = (rowsToFilter, filterValue, column) => {
-  return rowsToFilter.filter(row =>
-    row[column].toLowerCase().includes(filterValue))
-}
-
-const filterDoesNotContains = (rowsToFilter, filterValue, column) => {
-  return rowsToFilter.filter(row =>
-    !row[column].toLowerCase().includes(filterValue))
-}
-
-const filterEndsWith = (rowsToFilter, filterValue, column) => {
-  return rowsToFilter.filter(
-    row => row[column].toLowerCase().endsWith(filterValue))
+const firstFilter = (rowsToFilter: Column[], filterValues: FilterFormValues) => {
+  const column: keyof Column = filterValues.column;
+  const filter1By = filterValues.filter1By;
+  const filter1Value_LowerCase = filterValues.filter1Value.toLowerCase();
+  return filterOptionsController(rowsToFilter, filter1By, filter1Value_LowerCase, column);
 }
 
 const filterOptionsController = (rowsToFilter, filterBy, filterValue, column) => {
@@ -65,11 +53,40 @@ const filterOptionsController = (rowsToFilter, filterBy, filterValue, column) =>
   return filterOperations[filterBy];
 }
 
-const firstFilter = (rowsToFilter: Column[], filterValues: FilterFormValues) => {
-  const column: keyof Column = filterValues.column;
-  const filter1By = filterValues.filter1By;
-  const filter1Value_LowerCase = filterValues.filter1Value.toLowerCase();
-  return filterOptionsController(rowsToFilter, filter1By, filter1Value_LowerCase, column);
+const filterIsEqualTo = (rowsToFilter, filterValue, column) => {
+  return rowsToFilter.filter(row => row[column].toLowerCase() === filterValue)
+}
+
+const filterIsNotEqualTo = (rowsToFilter, filterValue, column) => {
+  return rowsToFilter.filter(row => row[column].toLowerCase() !== filterValue)
+}
+
+const filterStartsWith = (rowsToFilter, filterValue, column) => {
+  return rowsToFilter.filter(row => row[column].toLowerCase().startsWith(filterValue))
+}
+
+const filterContains = (rowsToFilter, filterValue, column) => {
+  return rowsToFilter.filter(row => row[column].toLowerCase().includes(filterValue))
+}
+
+const filterDoesNotContains = (rowsToFilter, filterValue, column) => {
+  return rowsToFilter.filter(row =>
+    !row[column].toLowerCase().includes(filterValue))
+}
+
+const filterEndsWith = (rowsToFilter, filterValue, column) => {
+  return rowsToFilter.filter(row => row[column].toLowerCase().endsWith(filterValue))
+}
+
+const secondFilterController = (rowsToFilter: Column[], firstFilterResult: Column[], filterValues: FilterFormValues) => {
+  const filter2Value = filterValues.filter2Value;
+  const compareValue = filterValues.compareValue;
+  if (!filter2Value)
+    return firstFilterResult;
+  if (compareValue === "And") {
+    return filterWithAndFinalResult(firstFilterResult, filterValues);
+  }
+  return filterWithOrController(rowsToFilter, firstFilterResult, filterValues);
 }
 
 const filterWithAndFinalResult = (firstFilterResult: Column[], filterValues: FilterFormValues) => {
@@ -79,6 +96,21 @@ const filterWithAndFinalResult = (firstFilterResult: Column[], filterValues: Fil
   if (firstFilterResult === [])
     return [];
   return filterOptionsController(firstFilterResult, filter2By, filter2Value_LowerCase, column);
+}
+
+const filterWithOrController = (rowsToFilter: Column[], firstFilterResult: Column[], filterValues: FilterFormValues) => {
+  const column: keyof Column = filterValues.column;
+  const filter2By = filterValues.filter2By;
+  const filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
+  let secondFilterResult = filterOptionsController(rowsToFilter, filter2By, filter2Value_LowerCase, column);
+  return prepareFinalResult(firstFilterResult, secondFilterResult);
+}
+
+const prepareFinalResult = (firstFilterResult: Column[], secondFilterResult: Column[]) => {
+  let mergedResult = mergeTwoArray(firstFilterResult, secondFilterResult);
+  let sortedResult = sortArrayById(mergedResult);
+  let finalResult = removeDuplicateElements(sortedResult);
+  return finalResult;
 }
 
 const mergeTwoArray = (firstArray, secondArray) => {
@@ -96,43 +128,6 @@ const removeDuplicateElements = (myArray) => {
     (item) => { return (item.id === elem.id) }) === index)
   return finalResult;
 }
-
-const prepareFinalResult = (firstFilterResult: Column[], secondFilterResult: Column[]) => {
-  let mergedResult = mergeTwoArray(firstFilterResult, secondFilterResult);
-  let sortedResult = sortArrayById(mergedResult);
-  let finalResult = removeDuplicateElements(sortedResult);
-  return finalResult;
-}
-
-const filterWithOrController = (rowsToFilter: Column[], firstFilterResult: Column[], filterValues: FilterFormValues) => {
-  const column: keyof Column = filterValues.column;
-  const filter2By = filterValues.filter2By;
-  const filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
-  let secondFilterResult = filterOptionsController(rowsToFilter, filter2By, filter2Value_LowerCase, column);
-  return prepareFinalResult(firstFilterResult, secondFilterResult);
-}
-
-const secondFilterController = (rowsToFilter: Column[], firstFilterResult: Column[], filterValues: FilterFormValues) => {
-  const filter2Value = filterValues.filter2Value;
-  const compareValue = filterValues.compareValue;
-  if (!filter2Value)
-    return firstFilterResult;
-  if (compareValue === "And") {
-    return filterWithAndFinalResult(firstFilterResult, filterValues);
-  }
-  return filterWithOrController(rowsToFilter, firstFilterResult, filterValues);
-}
-
-const filterRows = (rows: Column[], filterValues: FilterFormValues): Column[] => {
-  let rowsToFilter = rows;
-  const filter1Value = filterValues.filter1Value;
-  if (!filter1Value) {
-    return rowsToFilter;
-  }
-  let firstFilterResult = firstFilter(rowsToFilter, filterValues);
-  let finalResult = secondFilterController(rowsToFilter, firstFilterResult, filterValues);
-  return finalResult;
-};
 
 module.exports = {
   filterRows
