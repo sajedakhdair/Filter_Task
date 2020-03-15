@@ -70,15 +70,18 @@ var removeDuplicateElements = function (myArray) {
     var finalResult = myArray.filter(function (elem, index, self) { return self.findIndex(function (item) { return (item.id === elem.id); }) === index; });
     return finalResult;
 };
+var prepareFinalResult = function (firstFilterResult, secondFilterResult) {
+    var finalResult1 = mergeTwoArray(firstFilterResult, secondFilterResult);
+    var sortedArray = SortArrayById(finalResult1);
+    var finalResult = removeDuplicateElements(sortedArray);
+    return finalResult;
+};
 var filterWithOr = function (rowsToFilter, firstFilterResult, filterValues) {
     var column = filterValues.column;
     var filter2By = filterValues.filter2By;
     var filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
     var secondFilterResult = myfilter(rowsToFilter, filter2By, filter2Value_LowerCase, column);
-    var finalResult1 = mergeTwoArray(firstFilterResult, secondFilterResult);
-    var sortedArray = SortArrayById(finalResult1);
-    var finalResult = removeDuplicateElements(sortedArray);
-    return finalResult;
+    return prepareFinalResult(firstFilterResult, secondFilterResult);
 };
 var secondFilter = function (rowsToFilter, firstFilterResult, filterValues) {
     var filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
