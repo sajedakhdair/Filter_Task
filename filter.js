@@ -5,40 +5,44 @@ var __spreadArrays = (this && this.__spreadArrays) || function () {
             r[k] = a[j];
     return r;
 };
+var filterIsEqualTo = function (rowsToFilter, filterValue, column) {
+    return rowsToFilter.filter(function (row) {
+        return row[column].toLowerCase() === filterValue;
+    });
+};
+var filterIsNotEqualTo = function (rowsToFilter, filterValue, column) {
+    return rowsToFilter.filter(function (row) {
+        return row[column].toLowerCase() !== filterValue;
+    });
+};
+var filterStartsWith = function (rowsToFilter, filterValue, column) {
+    return rowsToFilter.filter(function (row) {
+        return row[column].toLowerCase().startsWith(filterValue);
+    });
+};
+var filterContains = function (rowsToFilter, filterValue, column) {
+    return rowsToFilter.filter(function (row) {
+        return row[column].toLowerCase().includes(filterValue);
+    });
+};
+var filterDoesNotContains = function (rowsToFilter, filterValue, column) {
+    return rowsToFilter.filter(function (row) {
+        return !row[column].toLowerCase().includes(filterValue);
+    });
+};
+var filterEndsWith = function (rowsToFilter, filterValue, column) {
+    return rowsToFilter.filter(function (row) { return row[column].toLowerCase().endsWith(filterValue); });
+};
 var myfilter = function (rowsToFilter, filterBy, filterValue, column) {
-    switch (filterBy) {
-        case "Is equal to":
-            rowsToFilter = rowsToFilter.filter(function (row) {
-                return row[column].toLowerCase() === filterValue;
-            });
-            break;
-        case "Is not equal to":
-            rowsToFilter = rowsToFilter.filter(function (row) {
-                return row[column].toLowerCase() !== filterValue;
-            });
-            break;
-        case "Starts with":
-            rowsToFilter = rowsToFilter.filter(function (row) {
-                return row[column].toLowerCase().startsWith(filterValue);
-            });
-            break;
-        case "Contains":
-            rowsToFilter = rowsToFilter.filter(function (row) {
-                return row[column].toLowerCase().includes(filterValue);
-            });
-            break;
-        case "Does not contain":
-            rowsToFilter = rowsToFilter.filter(function (row) {
-                return !row[column].toLowerCase().includes(filterValue);
-            });
-            break;
-        case "Ends with":
-            rowsToFilter = rowsToFilter.filter(function (row) { return row[column].toLowerCase().endsWith(filterValue); });
-            break;
-        default:
-            break;
-    }
-    return rowsToFilter;
+    var filterOperations = {
+        "Is equal to": filterIsEqualTo(rowsToFilter, filterValue, column),
+        "Is not equal to": filterIsNotEqualTo(rowsToFilter, filterValue, column),
+        "Starts with": filterStartsWith(rowsToFilter, filterValue, column),
+        "Contains": filterContains(rowsToFilter, filterValue, column),
+        "Does not contain": filterDoesNotContains(rowsToFilter, filterValue, column),
+        "Ends with": filterEndsWith(rowsToFilter, filterValue, column)
+    };
+    return filterOperations[filterBy];
 };
 var firstFilter = function (rowsToFilter, filterValues) {
     var column = filterValues.column;
