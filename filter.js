@@ -33,24 +33,40 @@ var filterOptionsController = function (rowsToFilter, filterBy, filterValue, col
     return filterOperations[filterBy];
 };
 var filterIsEqualTo = function (rowsToFilter, filterValue, column) {
-    return rowsToFilter.filter(function (row) { return row[column].toLowerCase() === filterValue; });
+    return rowsToFilter.filter(function (row) { return findTheValueForNestedColumn(row, column).toLowerCase() === filterValue; });
 };
 var filterIsNotEqualTo = function (rowsToFilter, filterValue, column) {
-    return rowsToFilter.filter(function (row) { return row[column].toLowerCase() !== filterValue; });
+    return rowsToFilter.filter(function (row) {
+        return findTheValueForNestedColumn(row, column).toLowerCase() !== filterValue;
+    });
 };
 var filterStartsWith = function (rowsToFilter, filterValue, column) {
-    return rowsToFilter.filter(function (row) { return row[column].toLowerCase().startsWith(filterValue); });
+    return rowsToFilter.filter(function (row) {
+        return findTheValueForNestedColumn(row, column).toLowerCase().startsWith(filterValue);
+    });
 };
 var filterContains = function (rowsToFilter, filterValue, column) {
-    return rowsToFilter.filter(function (row) { return row[column].toLowerCase().includes(filterValue); });
+    return rowsToFilter.filter(function (row) {
+        return findTheValueForNestedColumn(row, column).toLowerCase().includes(filterValue);
+    });
 };
 var filterDoesNotContains = function (rowsToFilter, filterValue, column) {
     return rowsToFilter.filter(function (row) {
-        return !row[column].toLowerCase().includes(filterValue);
+        return !findTheValueForNestedColumn(row, column).toLowerCase().includes(filterValue);
     });
 };
 var filterEndsWith = function (rowsToFilter, filterValue, column) {
-    return rowsToFilter.filter(function (row) { return row[column].toLowerCase().endsWith(filterValue); });
+    return rowsToFilter.filter(function (row) {
+        return findTheValueForNestedColumn(row, column).toLowerCase().endsWith(filterValue);
+    });
+};
+var findTheValueForNestedColumn = function (row, column) {
+    if (typeof column === "function")
+        return column(row);
+    else {
+        return row[column];
+    }
+    ;
 };
 var secondFilterController = function (rowsToFilter, firstFilterResult, filterValues) {
     var filter2Value = filterValues.filter2Value;
