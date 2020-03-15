@@ -1179,4 +1179,44 @@ describe("filter Rows according to a column value  ", () => {
     ];
     expect(result).toStrictEqual(expected);
   });
+  test("testcase 76:(nested_column(three level)compare columnValue by 'Is not equal to' filter1Value Or 'Starts with' filter2Value ", () => {
+    let filterValues = {
+      filter1By: "Is not equal to",
+      filter1Value: "Volleyball",
+      filter2By: "Starts with",
+      filter2Value: "B",
+      compareValue: "Or",
+      column: elem => {
+        return elem.category.favoriteSport.secondSport;
+      }
+    };
+    let myColumn = [
+      {
+        id: "1",
+        name: "Ahmad Khdair",
+        category: {
+          favoriteSport: {
+            firstSport: "football",
+            secondSport: "Basketball"
+          },
+          favoriteLanguage: "C++"
+        }
+      }
+    ];
+    const result = filterRows(myColumn, filterValues);
+    const expected = [
+      {
+        id: "1",
+        name: "Ahmad Khdair",
+        category: {
+          favoriteSport: {
+            firstSport: "football",
+            secondSport: "Basketball"
+          },
+          favoriteLanguage: "C++"
+        }
+      }
+    ];
+    expect(result).toStrictEqual(expected);
+  });
 });
