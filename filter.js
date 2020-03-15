@@ -33,7 +33,7 @@ var filterDoesNotContains = function (rowsToFilter, filterValue, column) {
 var filterEndsWith = function (rowsToFilter, filterValue, column) {
     return rowsToFilter.filter(function (row) { return row[column].toLowerCase().endsWith(filterValue); });
 };
-var myfilter = function (rowsToFilter, filterBy, filterValue, column) {
+var filterOptionsController = function (rowsToFilter, filterBy, filterValue, column) {
     var filterOperations = {
         "Is equal to": filterIsEqualTo(rowsToFilter, filterValue, column),
         "Is not equal to": filterIsNotEqualTo(rowsToFilter, filterValue, column),
@@ -48,20 +48,20 @@ var firstFilter = function (rowsToFilter, filterValues) {
     var column = filterValues.column;
     var filter1By = filterValues.filter1By;
     var filter1Value_LowerCase = filterValues.filter1Value.toLowerCase();
-    return myfilter(rowsToFilter, filter1By, filter1Value_LowerCase, column);
+    return filterOptionsController(rowsToFilter, filter1By, filter1Value_LowerCase, column);
 };
-var filterWithAnd = function (firstFilterResult, filterValues) {
+var filterWithAndFinalResult = function (firstFilterResult, filterValues) {
     var column = filterValues.column;
     var filter2By = filterValues.filter2By;
     var filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
     if (firstFilterResult === [])
         return [];
-    return myfilter(firstFilterResult, filter2By, filter2Value_LowerCase, column);
+    return filterOptionsController(firstFilterResult, filter2By, filter2Value_LowerCase, column);
 };
 var mergeTwoArray = function (firstArray, secondArray) {
     return __spreadArrays(firstArray, secondArray);
 };
-var SortArrayById = function (myArray) {
+var sortArrayById = function (myArray) {
     return myArray.sort(function (FirstItem, SecondItem) {
         return Number(FirstItem.id) - Number(SecondItem.id);
     });
@@ -71,27 +71,27 @@ var removeDuplicateElements = function (myArray) {
     return finalResult;
 };
 var prepareFinalResult = function (firstFilterResult, secondFilterResult) {
-    var finalResult1 = mergeTwoArray(firstFilterResult, secondFilterResult);
-    var sortedArray = SortArrayById(finalResult1);
-    var finalResult = removeDuplicateElements(sortedArray);
+    var mergedResult = mergeTwoArray(firstFilterResult, secondFilterResult);
+    var sortedResult = sortArrayById(mergedResult);
+    var finalResult = removeDuplicateElements(sortedResult);
     return finalResult;
 };
-var filterWithOr = function (rowsToFilter, firstFilterResult, filterValues) {
+var filterWithOrController = function (rowsToFilter, firstFilterResult, filterValues) {
     var column = filterValues.column;
     var filter2By = filterValues.filter2By;
     var filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
-    var secondFilterResult = myfilter(rowsToFilter, filter2By, filter2Value_LowerCase, column);
+    var secondFilterResult = filterOptionsController(rowsToFilter, filter2By, filter2Value_LowerCase, column);
     return prepareFinalResult(firstFilterResult, secondFilterResult);
 };
-var secondFilter = function (rowsToFilter, firstFilterResult, filterValues) {
-    var filter2Value_LowerCase = filterValues.filter2Value.toLowerCase();
+var secondFilterController = function (rowsToFilter, firstFilterResult, filterValues) {
+    var filter2Value = filterValues.filter2Value;
     var compareValue = filterValues.compareValue;
-    if (!filter2Value_LowerCase)
+    if (!filter2Value)
         return firstFilterResult;
     if (compareValue === "And") {
-        return filterWithAnd(firstFilterResult, filterValues);
+        return filterWithAndFinalResult(firstFilterResult, filterValues);
     }
-    return filterWithOr(rowsToFilter, firstFilterResult, filterValues);
+    return filterWithOrController(rowsToFilter, firstFilterResult, filterValues);
 };
 var filterRows = function (rows, filterValues) {
     var rowsToFilter = rows;
@@ -100,7 +100,7 @@ var filterRows = function (rows, filterValues) {
         return rowsToFilter;
     }
     var firstFilterResult = firstFilter(rowsToFilter, filterValues);
-    var finalResult = secondFilter(rowsToFilter, firstFilterResult, filterValues);
+    var finalResult = secondFilterController(rowsToFilter, firstFilterResult, filterValues);
     return finalResult;
 };
 module.exports = {
