@@ -1144,4 +1144,39 @@ describe("filter Rows according to a column value  ", () => {
     const expected = [];
     expect(result).toStrictEqual(expected);
   });
+  // add test cases to testing if  the function works for nested columns after modified it
+  test("testcase 75:(nested_column(two level))compare columnValue by 'Is equal to' filter1Value Or 'Starts with' filter2Value ", () => {
+    let filterValues = {
+      filter1By: "Is equal to",
+      filter1Value: "Sajeda",
+      filter2By: "Starts with",
+      filter2Value: "S",
+      compareValue: "And",
+      column: elem => {
+        return elem.name.first;
+      }
+    };
+    let myColumn = [
+      {
+        id: "1",
+        name: {
+          first: "Sajeda",
+          second: "Khdair"
+        },
+        category: "female"
+      }
+    ];
+    const result = filterRows(myColumn, filterValues);
+    const expected = [
+      {
+        id: "1",
+        name: {
+          first: "Sajeda",
+          second: "Khdair"
+        },
+        category: "female"
+      }
+    ];
+    expect(result).toStrictEqual(expected);
+  });
 });
