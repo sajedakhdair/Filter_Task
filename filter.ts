@@ -23,30 +23,46 @@ interface Column {
   name: string;
 }
 
+const filterIsEqualTo = (rowsToFilter, filterValue, column) => {
+  return rowsToFilter.filter(row =>
+    row[column].toLowerCase() === filterValue)
+}
+
+const filterIsNotEqualTo = (rowsToFilter, filterValue, column) => {
+  return rowsToFilter.filter(row =>
+    row[column].toLowerCase() !== filterValue)
+}
+
+const filterStartsWith = (rowsToFilter, filterValue, column) => {
+  return rowsToFilter.filter(row =>
+    row[column].toLowerCase().startsWith(filterValue))
+}
+
+const filterContains = (rowsToFilter, filterValue, column) => {
+  return rowsToFilter.filter(row =>
+    row[column].toLowerCase().includes(filterValue))
+}
+
+const filterDoesNotContains = (rowsToFilter, filterValue, column) => {
+  return rowsToFilter.filter(row =>
+    !row[column].toLowerCase().includes(filterValue))
+}
+
+const filterEndsWith = (rowsToFilter, filterValue, column) => {
+  return rowsToFilter.filter(
+    row => row[column].toLowerCase().endsWith(filterValue))
+}
+
 const myfilter = (rowsToFilter, filterBy, filterValue, column) => {
-  switch (filterBy) {
-    case "Is equal to": rowsToFilter = rowsToFilter.filter(row =>
-      row[column].toLowerCase() === filterValue)
-      break;
-    case "Is not equal to": rowsToFilter = rowsToFilter.filter(row =>
-      row[column].toLowerCase() !== filterValue)
-      break;
-    case "Starts with": rowsToFilter = rowsToFilter.filter(row =>
-      row[column].toLowerCase().startsWith(filterValue))
-      break;
-    case "Contains": rowsToFilter = rowsToFilter.filter(row =>
-      row[column].toLowerCase().includes(filterValue))
-      break;
-    case "Does not contain": rowsToFilter = rowsToFilter.filter(row =>
-      !row[column].toLowerCase().includes(filterValue))
-      break;
-    case "Ends with": rowsToFilter = rowsToFilter.filter(
-      row => row[column].toLowerCase().endsWith(filterValue))
-      break;
-    default:
-      break;
+  const filterOperations = {
+    "Is equal to": filterIsEqualTo(rowsToFilter, filterValue, column),
+    "Is not equal to": filterIsNotEqualTo(rowsToFilter, filterValue, column),
+    "Starts with": filterStartsWith(rowsToFilter, filterValue, column),
+    "Contains": filterContains(rowsToFilter, filterValue, column),
+    "Does not contain": filterDoesNotContains(rowsToFilter, filterValue, column),
+    "Ends with": filterEndsWith(rowsToFilter, filterValue, column)
   }
-  return rowsToFilter;
+  return filterOperations[filterBy];
 }
 
 const firstFilter = (rowsToFilter: Column[], filterValues: FilterFormValues) => {
